@@ -41,4 +41,6 @@ public class CustomerController {
 	public void cancelTrip(@RequestParam Integer tripId){
 		customerService.completeTrip(tripId);
 	}
+
+
 }
