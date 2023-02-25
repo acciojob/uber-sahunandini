@@ -4,4 +4,5 @@ public enum TripStatus {
     CONFIRMED,
     CANCELED,
     COMPLETED
+
 }
