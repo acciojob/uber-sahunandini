@@ -1,41 +1,59 @@
 package com.driver.model;
 
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.apache.catalina.Wrapper;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Drivers")
-public class Driver {
+@Table
+public class Driver{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
 
     private String mobile;
 
     private String password;
 
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn
     private Cab cab;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
-    private List<TripBooking> tripBookingList;
+    List<TripBooking> tripBookingList = new ArrayList<>();
 
+    public Driver(int driverId, String mobile, String password, Cab cab) {
+        this.driverId = driverId;
+        this.mobile = mobile;
+        this.password = password;
+        this.cab = cab;
+    }
+
+    public Driver() {
+    }
 
     public Driver(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;
     }
 
-    public Driver() {
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
     }
 
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
+    }
 
     public int getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(int driverId) {
+    public void setDriverId(Integer driverId) {
         this.driverId = driverId;
     }
 
@@ -61,13 +79,5 @@ public class Driver {
 
     public void setCab(Cab cab) {
         this.cab = cab;
-    }
-
-    public List<TripBooking> getTripBookingList() {
-        return tripBookingList;
-    }
-
-    public void setTripBookingList(List<TripBooking> tripBookingList) {
-        this.tripBookingList = tripBookingList;
     }
 }
